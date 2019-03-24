@@ -2,6 +2,10 @@
 
 #include <QWidget>
 #include <QLabel>
+#include <QAbstractItemView>
+#include <QStringList>
+
+#include <QStringListModel>
 #include "ui_server.h"
 
 namespace Ui
@@ -18,9 +22,13 @@ public:
 
 private:
     Ui::Server *ui;
+    QStringListModel *model;
+
 
 signals:
 
 public slots:
+    void ItemClicked (QModelIndex& index );
+
 };
 
