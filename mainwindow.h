@@ -1,9 +1,9 @@
-#ifndef MAINWINDOW_H
-#define MAINWINDOW_H
-
-#include "local_playback.h"
+#pragma once
 
 #include <QMainWindow>
+
+#include "client.h"
+#include "local_playback.h"
 
 namespace Ui
 {
@@ -15,20 +15,16 @@ class MainWindow : public QMainWindow
     Q_OBJECT
 
   public:
-    LocalPlayback *local_playback;
-
     explicit MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
-
-    //init ui
-    void init_local_playback_ui();
 
   private:
     Ui::MainWindow *ui;
 
+    Client *client;
+
 public slots:
-    void slot_local_playback_onclick_choose_song();
+    void init_main_ui();
 
 };
 
-#endif // MAINWINDOW_H

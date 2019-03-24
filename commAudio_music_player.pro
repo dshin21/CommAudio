@@ -27,14 +27,20 @@ CONFIG += c++11
 SOURCES += \
         main.cpp \
         mainwindow.cpp \
-    local_playback.cpp
+    local_playback.cpp \
+    server.cpp \
+    client.cpp
 
 HEADERS += \
         mainwindow.h \
-    local_playback.h
+    local_playback.h \
+    server.h \
+    client.h
 
 FORMS += \
-        mainwindow.ui
+        mainwindow.ui \
+    server.ui \
+    client.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

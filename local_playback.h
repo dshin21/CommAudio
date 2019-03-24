@@ -1,5 +1,5 @@
-#ifndef MUSICPLAYER_H
-#define MUSICPLAYER_H
+#pragma once
+
 
 #include <QObject>
 #include <QMediaPlayer>
@@ -20,5 +20,3 @@ class LocalPlayback : public QObject
     void music_player_play();
     void music_player_pause();
 };
-
-#endif // MUSICPLAYER_H
