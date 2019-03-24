@@ -1,18 +1,19 @@
 #include "mainwindow.h"
-#include "musicplayer.h"
+#include "local_playback.h"
 #include <QDebug>
 
-MusicPlayer::MusicPlayer(QObject *parent)
+LocalPlayback::LocalPlayback(QObject *parent)
     : QObject(parent), music_player(new QMediaPlayer)
 {
+
 }
 
-MusicPlayer::~MusicPlayer()
+LocalPlayback::~LocalPlayback()
 {
     delete music_player;
 }
 
-void MusicPlayer::music_player_play()
+void LocalPlayback::music_player_play()
 {
     QFile file_to_play(current_file);
 
@@ -34,7 +35,7 @@ void MusicPlayer::music_player_play()
     }
 }
 
-void MusicPlayer::music_player_pause()
+void LocalPlayback::music_player_pause()
 {
     music_player->pause();
 }

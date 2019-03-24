@@ -27,11 +27,11 @@ CONFIG += c++11
 SOURCES += \
         main.cpp \
         mainwindow.cpp \
-    musicplayer.cpp
+    local_playback.cpp
 
 HEADERS += \
         mainwindow.h \
-    musicplayer.h
+    local_playback.h
 
 FORMS += \
         mainwindow.ui

@@ -73,7 +73,7 @@
      <attribute name="label">
       <string>Local Playback</string>
      </attribute>
-     <widget class="QPushButton" name="btn_select_file">
+     <widget class="QPushButton" name="btn_select_music_file">
       <property name="geometry">
        <rect>
         <x>120</x>

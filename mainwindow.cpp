@@ -1,18 +1,14 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
-#include <QFileDialog>
-
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent),
       ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
 
-    music_player = new MusicPlayer;
-    connect(ui->btn_select_file, &QPushButton::clicked, this, &MainWindow::onclick_btn_select_file);
-    connect(ui->btn_play, &QPushButton::clicked, music_player, &MusicPlayer::music_player_play);
-    connect(ui->btn_pause, &QPushButton::clicked, music_player, &MusicPlayer::music_player_pause);
+    local_playback = new LocalPlayback;
+    init_local_playback_ui();
 }
 
 MainWindow::~MainWindow()
@@ -20,15 +16,17 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-void MainWindow::onclick_btn_select_file()
+void MainWindow::init_local_playback_ui()
 {
-    music_player->current_file = QFileDialog::getOpenFileName(this,
-                                                              tr("Select a .wav file to listen"),
-                                                              "./",
-                                                              nullptr);
+    connect(ui->btn_select_music_file, &QPushButton::clicked, this, &MainWindow::slot_local_playback_onclick_choose_song);
+    connect(ui->btn_play, &QPushButton::clicked, local_playback, &LocalPlayback::music_player_play);
+    connect(ui->btn_pause, &QPushButton::clicked, local_playback, &LocalPlayback::music_player_pause);
 }
 
-void MainWindow::onclick_btn_save_file()
+void MainWindow::slot_local_playback_onclick_choose_song()
 {
-    //TODO: save streaming music
+    local_playback->current_file = QFileDialog::getOpenFileName(this,
+                                                              tr("Select a .wav file to listen"),
+                                                              "./",
+                                                                nullptr);
 }

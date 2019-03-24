@@ -1,9 +1,8 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
-#include "musicplayer.h"
+#include "local_playback.h"
 
-#include <QFile>
 #include <QMainWindow>
 
 namespace Ui
@@ -16,16 +15,20 @@ class MainWindow : public QMainWindow
     Q_OBJECT
 
   public:
-    MusicPlayer *music_player;
+    LocalPlayback *local_playback;
 
     explicit MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
-    void onclick_btn_select_file();
-    void onclick_btn_save_file();
+    //init ui
+    void init_local_playback_ui();
 
   private:
     Ui::MainWindow *ui;
+
+public slots:
+    void slot_local_playback_onclick_choose_song();
+
 };
 
 #endif // MAINWINDOW_H

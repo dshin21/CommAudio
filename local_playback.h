@@ -6,15 +6,15 @@
 #include <QFileDialog>
 #include <QFile>
 
-class MusicPlayer : public QObject
+class LocalPlayback : public QObject
 {
     Q_OBJECT
   public:
     QMediaPlayer *music_player;
     QString current_file;
 
-    explicit MusicPlayer(QObject *parent = nullptr);
-    ~MusicPlayer();
+    explicit LocalPlayback(QObject *parent = nullptr);
+    ~LocalPlayback();
 
   public slots:
     void music_player_play();
