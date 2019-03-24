@@ -1,12 +1,22 @@
 #pragma once
 
 #include <QWidget>
+#include "ui_server.h"
 
-class server : public QWidget
+namespace Ui
+{
+class Server;
+}
+
+class Server : public QWidget
 {
     Q_OBJECT
 public:
-    explicit server(QWidget *parent = nullptr);
+    explicit Server(QWidget *parent = nullptr);
+    ~Server();
+
+private:
+    Ui::Server *ui;
 
 signals:
 

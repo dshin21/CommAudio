@@ -23,6 +23,12 @@ void MainWindow::init_main_ui()
         client->show();
         this->hide();
     });
+
+    connect(ui->btn_server, &QPushButton::clicked, this, [&](){
+        server = new Server;
+        server->show();
+        this->hide();
+    });
 }
 
 

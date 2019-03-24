@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Form</string>
+   <string>Client</string>
   </property>
   <widget class="QToolBox" name="toolBox">
    <property name="enabled">

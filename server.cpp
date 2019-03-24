@@ -1,6 +1,12 @@
 #include "server.h"
 
-server::server(QWidget *parent) : QWidget(parent)
+Server::Server(QWidget *parent) : QWidget(parent)
 {
+    ui->setupUi(this);
 
+}
+
+Server::~Server()
+{
+    delete ui;
 }

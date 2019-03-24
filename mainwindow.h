@@ -3,7 +3,7 @@
 #include <QMainWindow>
 
 #include "client.h"
-#include "local_playback.h"
+#include "server.h"
 
 namespace Ui
 {
@@ -22,6 +22,7 @@ class MainWindow : public QMainWindow
     Ui::MainWindow *ui;
 
     Client *client;
+    Server *server;
 
 public slots:
     void init_main_ui();
