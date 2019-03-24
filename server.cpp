@@ -6,6 +6,11 @@ Server::Server(QWidget *parent) :
 {
     ui->setupUi(this);
 
+    QLabel *label = new QLabel(this);
+    label->setText("1. test");
+    label->setText(label->text().append("\n\n2. hi"));
+
+    ui->scrollArea->setWidget(label);
 }
 
 Server::~Server()
