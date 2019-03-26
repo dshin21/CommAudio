@@ -35,15 +35,12 @@ void Voice::slot_get_voice_combo_box_text(const QString &text)
 
 void Voice::slot_voice_onclick_connect()
 {
-    qDebug("The client server is running on\n\nIP: %s\nport: %d\n\n", qPrintable(voice_server_ip), voice_server->serverPort());
-
     start_server();
     voice_in = new QAudioInput(format, this);
     voice_socket_out = new QTcpSocket(this);
 
     voice_socket_out->connectToHost(QHostAddress(combo_box_text), 5151, QIODevice::WriteOnly);
     voice_in->start(voice_socket_out);
-    qDebug()<<"connected";
 }
 
 
@@ -52,12 +49,15 @@ void Voice::start_server()
     if (!voice_server->listen(QHostAddress::Any, 5151))
         return;
     connect(voice_server, &QTcpServer::newConnection, this, &Voice::incoming_connection_request);
+    qDebug("The client server is running on\n\nIP: %s\nport: %d\n\n", qPrintable(voice_server_ip), voice_server->serverPort());
 }
 
 void Voice::incoming_connection_request()
 {
     if (voice_socket == nullptr)
     {
+        qDebug()<<"new connection";
+
         voice_socket = voice_server->nextPendingConnection();
         voice_out = new QAudioOutput(format, this);
         connect(voice_socket, &QIODevice::readyRead, this, &Voice::ready_voice);
