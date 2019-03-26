@@ -68,12 +68,16 @@ void Voice::incoming_connection_request()
         voice_out = new QAudioOutput(format, this);
         connect(voice_socket, &QIODevice::readyRead, this, &Voice::ready_voice);
     }
+    qDebug()<<"new connection outside";
+
 }
 
 void Voice::ready_voice()
 {
     if ((voice_out->state() == QAudio::IdleState || voice_out->state() == QAudio::StoppedState))
     {
+        qDebug()<<"ready voice";
+
         voice_out->start(voice_socket);
     }
 }

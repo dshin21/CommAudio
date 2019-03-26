@@ -13,9 +13,9 @@ class Voice : public QObject
 public:
     explicit Voice(QObject *parent = nullptr);
 
-    QTcpServer *voice_server;
-    QTcpSocket *voice_socket;
-    QTcpSocket *voice_socket_out;
+    QTcpServer *voice_server = nullptr;
+    QTcpSocket *voice_socket = nullptr;
+    QTcpSocket *voice_socket_out = nullptr;
     QString voice_server_ip;
     QAudioFormat format;
     QAudioInput *voice_in;
