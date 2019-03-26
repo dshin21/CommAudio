@@ -11,12 +11,13 @@ public:
     explicit StreamFromServer(QObject *parent = nullptr);
 
     QAudioOutput *streamer;
+    QAudioFormat format;
+    QTcpSocket *tcp_socket;
+
     bool started_stream;
     bool data_ready;
     int combo_box_idx;
-    QTcpSocket *tcp_socket;
 
-    void start();
     void set_socket(QTcpSocket *client_socket);
 
 private:
@@ -27,5 +28,6 @@ public slots:
     void pause();
     void send_header();
     void slot_get_stream_combo_box_idx(int idx);
+    void slot_tab_idx_changed(int idx);
 };
 

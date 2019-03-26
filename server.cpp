@@ -113,16 +113,14 @@ void Server::slot_server_received_data_from_client()
 
     QList<QString> received_data_string = QString(socket->readAll()).split(";");
 
+    qDebug()<<"received: "<<received_data_string;
+
     if(received_data_string[0] == "stream"){
         int file_idx = received_data_string[1].toInt();
         QFile *client_requested_stream_file = new QFile(playlist_abs[file_idx]);
-        if (!client_requested_stream_file->isOpen())
-        {
-            if (!client_requested_stream_file->open(QIODevice::ReadOnly))
-            {
-                return;
-            }
-        }
+
+        if (!client_requested_stream_file->isOpen() &&
+                !client_requested_stream_file->open(QIODevice::ReadOnly)) return;
 
         dataStreamList.append(new QDataStream(socket));
 

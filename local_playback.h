@@ -18,5 +18,4 @@ class LocalPlayback : public QObject
   public slots:
     void play();
     void pause();
-    //change streamer into this style
 };

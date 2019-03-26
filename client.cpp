@@ -56,6 +56,7 @@ void Client::init_stream_from_server_ui(QList<QString> received_playlist)
     connect(ui->btn_stream_play, &QPushButton::clicked, stream_from_server, &StreamFromServer::play);
     connect(ui->btn_stream_pause, &QPushButton::clicked, stream_from_server, &StreamFromServer::pause);
     connect(ui->stream_combo_box, QOverload<int>::of(&QComboBox::currentIndexChanged), stream_from_server, &StreamFromServer::slot_get_stream_combo_box_idx);
+    connect(ui->toolBox, &QToolBox::currentChanged, stream_from_server, &StreamFromServer::slot_tab_idx_changed);
 
     for(int i = 0; i < received_playlist.size(); ++i)
         ui->stream_combo_box->addItem(received_playlist[i]);
@@ -78,12 +79,6 @@ void Client::slot_client_received_data_from_server()
         //        init_join_chat_ui(received_ip_list);
         //        init_download_music_ui(received_playlist);
     }
-
-//    if(ui->toolBox->currentIndex() == 1){
-//        stream_from_server->data_ready = true;
-//        stream_from_server->play();
-////        //TODO: set started_stream to false when other tabs start
-//    }
 }
 
 QList<QString> Client::remove_header_info(QString received_data_string)
