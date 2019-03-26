@@ -97,20 +97,24 @@ void Client::slot_client_connect_to_server()
 void Client::slot_client_received_data_from_server()
 {
     QString received_data_string = tcp_socket->peek(1);
-    if(received_data_string != '\u0002'){
-        qDebug() << received_data_string;
-        if(received_data_string == 'I'){
-            //initial connect data
-            received_data_string = QString(tcp_socket->readAll());
-            QList<QString> received_data = remove_header_info(received_data_string);
-            QList<QString> received_playlist = received_data[0].split(";");
-            QList<QString> received_ip_list = received_data[1].split(";");
+    //    if(received_data_string != '\u0002'){
+    //        qDebug() << received_data_string;
+    if(received_data_string == 'I'){
+        //initial connect data
+        received_data_string = QString(tcp_socket->readAll());
+        QList<QString> received_data = remove_header_info(received_data_string);
+        QList<QString> received_playlist = received_data[0].split(";");
+        QList<QString> received_ip_list = received_data[1].split(";");
 
-            init_stream_from_server_ui(received_playlist);
-            init_download_ui(received_playlist);
-            init_voice_ui(received_ip_list);
-        }
+        init_stream_from_server_ui(received_playlist);
+        init_download_ui(received_playlist);
+        init_voice_ui(received_ip_list);
+    }else if(received_data_string == 'V'){
+        received_data_string = QString(tcp_socket->readAll());
+        QList<QString> received_ip_list = received_data_string.split(":");
+        qDebug() << received_ip_list[received_ip_list.size()-1];
     }
+    //    }
 }
 
 QList<QString> Client::remove_header_info(QString received_data_string)
