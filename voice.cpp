@@ -15,6 +15,23 @@ void Voice::set_server(QTcpServer *tcp_server)
     voice_server = voice_server;
 }
 
+void Voice::slot_get_voice_combo_box_text(const QString &text)
+{
+    combo_box_text = text;
+}
+
+void Voice::slot_voice_onclick_connect()
+{
+    start_server();
+    voice_in = new QAudioInput(format, this);
+    voice_socket_out = new QTcpSocket(this);
+
+    voice_socket_out->connectToHost(QHostAddress(combo_box_text), 5050, QIODevice::WriteOnly);
+    voice_in->start(voice_socket_out);
+    qDebug()<<"connected";
+}
+
+
 void Voice::start_server()
 {
     if (!voice_server->listen(QHostAddress::Any, 5050)) return;
@@ -39,19 +56,7 @@ void Voice::ready_voice()
     }
 }
 
-void Voice::slot_voice_onclick_connect()
-{
-    voice_in = new QAudioInput(format, this);
-    voice_socket_out = new QTcpSocket(this);
 
-    voice_socket_out->connectToHost(QHostAddress(combo_box_text), 5050, QIODevice::WriteOnly);
-    voice_in->start(voice_socket_out);
-    qDebug()<<"connected";
-}
 
-void Voice::slot_get_voice_combo_box_text(const QString &text)
-{
-    combo_box_text = text;
-}
 
 

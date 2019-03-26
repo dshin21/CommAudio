@@ -89,7 +89,6 @@ void Server::slot_server_add_new_client()
 
         clients[i]->write(qPrintable(header));
     }
-
 }
 
 QByteArray Server::create_initial_header()
