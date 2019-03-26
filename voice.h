@@ -1,5 +1,4 @@
-#ifndef VOICE_H
-#define VOICE_H
+#pragma once
 
 #include <QObject>
 #include <QtNetwork>
@@ -13,17 +12,20 @@ class Voice : public QObject
 public:
     explicit Voice(QObject *parent = nullptr);
 
+    QTcpSocket *tcp_socket;
     QTcpServer *voice_server = nullptr;
     QTcpSocket *voice_socket = nullptr;
     QTcpSocket *voice_socket_out = nullptr;
-    QString voice_server_ip;
+
     QAudioFormat format;
     QAudioInput *voice_in;
     QAudioOutput *voice_out;
+
+    QString voice_server_ip;
     QString combo_box_text;
 
-
-    void set_server(QTcpServer *tcp_server);
+    void send_header();
+    void set_socket(QTcpSocket *client_socket);
 
 signals:
 
@@ -33,6 +35,6 @@ public slots:
     void ready_voice();
     void slot_voice_onclick_connect();
     void slot_get_voice_combo_box_text(const QString &text); //TODO: refact all these to get combo_box_idx
-};
+    void slot_tab_idx_changed(int idx);
 
-#endif // VOICE_H
+};

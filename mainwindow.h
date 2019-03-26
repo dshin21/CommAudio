@@ -28,4 +28,3 @@ public slots:
     void init_main_ui();
 
 };
-

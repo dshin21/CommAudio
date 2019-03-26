@@ -16,7 +16,7 @@ Client::Client(QWidget *parent)
 
     stream_from_server->set_socket(tcp_socket);
     download->set_socket(tcp_socket);
-//    voice->set_server(tcp_server);
+    voice->set_socket(tcp_socket);
 
     init_client_ui();
 }
@@ -66,6 +66,8 @@ void Client::init_voice_ui(QList<QString> received_ip_list)
 {
     connect(ui->voice_combo_box, &QComboBox::currentTextChanged, voice, &Voice::slot_get_voice_combo_box_text);
     connect(ui->btn_voice_connect, &QPushButton::clicked, voice, &Voice::slot_voice_onclick_connect);
+    connect(ui->toolBox, &QToolBox::currentChanged, voice, &Voice::slot_tab_idx_changed);
+
     //TODO:
     //    connect(ui->btn_voice_disconnect, &QPushButton::clicked, voice, &Voice::slot_voice_onclick_disconnect);
     qDebug() << received_ip_list;
@@ -104,10 +106,13 @@ void Client::slot_client_received_data_from_server()
             QList<QString> received_playlist = received_data[0].split(";");
             QList<QString> received_ip_list = received_data[1].split(";");
 
-
             init_stream_from_server_ui(received_playlist);
             init_download_ui(received_playlist);
             init_voice_ui(received_ip_list);
+        }else if(received_data_string == 'V'){
+            received_data_string = QString(tcp_socket->readAll());
+            QList<QString> received_ip_list = received_data_string.split(":");
+            qDebug() << received_ip_list[received_ip_list.size()-1];
         }
     }
 }

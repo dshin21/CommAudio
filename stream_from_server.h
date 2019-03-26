@@ -32,4 +32,3 @@ public slots:
     void slot_tab_idx_changed(int idx);
 
 };
-

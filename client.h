@@ -48,7 +48,4 @@ public slots:
     void slot_client_connect_to_server();
     void slot_local_playback_onclick_choose_song();
     void slot_client_received_data_from_server();
-
-
-
 };

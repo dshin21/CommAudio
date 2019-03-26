@@ -1,5 +1,4 @@
-#ifndef DOWNLOAD_H
-#define DOWNLOAD_H
+#pragma once
 
 #include <QFile>
 #include <QObject>
@@ -30,5 +29,3 @@ public slots:
     void slot_get_stream_combo_box_idx(int idx);
     void download();
 };
-
-#endif // DOWNLOAD_H
