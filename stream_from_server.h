@@ -10,7 +10,7 @@ public:
     explicit StreamFromServer(QObject *parent = nullptr);
 
     QAudioOutput *audio;
-    bool is_streaming = false;
+    bool start_stream;
 
 private:
 

@@ -41,4 +41,5 @@ public slots:
     void slot_local_playback_onclick_choose_song();
     void slot_client_received_data_from_server();
     void slot_stream_onclick_stream_play();
+    void slot_stream_onclick_stream_pause();
 };

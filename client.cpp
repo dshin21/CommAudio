@@ -54,16 +54,26 @@ void Client::slot_local_playback_onclick_choose_song()
 void Client::init_stream_from_server_ui(QList<QString> received_playlist)
 {
     connect(ui->btn_stream_play, &QPushButton::clicked, this, &Client::slot_stream_onclick_stream_play);
+    connect(ui->btn_stream_pause, &QPushButton::clicked, this, &Client::slot_stream_onclick_stream_pause);
     for(int i = 0; i < received_playlist.size(); ++i)
         ui->stream_combo_box->addItem(received_playlist[i]);
 }
 
 void Client::slot_stream_onclick_stream_play()
 {
+    if(stream_from_server->start_stream)
+        stream_from_server->audio->resume();
+
     QString header = "stream;";
     header.append(QString::number(ui->stream_combo_box->currentIndex()));
-    stream_from_server->is_streaming = true;
     tcp_socket->write(qPrintable(header));
+    stream_from_server->start_stream = true;
+}
+
+void Client::slot_stream_onclick_stream_pause()
+{
+    if (stream_from_server->start_stream)
+        stream_from_server->audio->suspend();
 }
 
 void Client::slot_client_received_data_from_server()
@@ -82,9 +92,11 @@ void Client::slot_client_received_data_from_server()
         //        init_download_music_ui(received_playlist);
     }
 
-    if(stream_from_server->is_streaming)
-        if ((stream_from_server->audio->state() == QAudio::IdleState || stream_from_server->audio->state() == QAudio::StoppedState))
+    if(stream_from_server->start_stream)
+        if ((stream_from_server->audio->state() == QAudio::IdleState ||
+             stream_from_server->audio->state() == QAudio::StoppedState)){
             stream_from_server->audio->start(tcp_socket);
+        }
 }
 
 QList<QString> Client::remove_header_info(QString received_data_string)
@@ -99,12 +111,3 @@ QList<QString> Client::remove_header_info(QString received_data_string)
     return result;
 }
 
-
-//void Client::streamStateChange()
-//{
-//    if (audio->state() != QAudio::ActiveState && tcpSocket->bytesAvailable() == 0 && !multicast)
-//    {
-
-//        streaming = false;
-//    }
-//}
