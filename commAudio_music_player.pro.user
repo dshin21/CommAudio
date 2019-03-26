@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE QtCreatorProject>
-<!-- Written by QtCreator 4.7.2, 2019-03-24T03:10:56. -->
+<!-- Written by QtCreator 4.7.2, 2019-03-24T22:06:04. -->
 <qtcreator>
  <data>
   <variable>EnvironmentId</variable>
@@ -291,7 +291,7 @@
     <valuelist type="QVariantList" key="PE.EnvironmentAspect.Changes"/>
     <value type="QString" key="ProjectExplorer.ProjectConfiguration.DefaultDisplayName">commAudio_music_player</value>
     <value type="QString" key="ProjectExplorer.ProjectConfiguration.DisplayName">commAudio_music_player2</value>
-    <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">Qt4ProjectManager.Qt4RunConfiguration:C:/Users/danie/Downloads/C4985-CommAudio-57e488ff41bfd9b43541aa4953a02ef198d8297f/C4985-CommAudio-57e488ff41bfd9b43541aa4953a02ef198d8297f/commAudio_music_player/commAudio_music_player.pro</value>
+    <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">Qt4ProjectManager.Qt4RunConfiguration:D:/googleDrive/IN-PROGRESS/CommAudio/commAudio_music_player.pro</value>
     <value type="bool" key="QmakeProjectManager.QmakeRunConfiguration.UseLibrarySearchPath">true</value>
     <value type="QString" key="Qt4ProjectManager.Qt4RunConfiguration.CommandLineArguments"></value>
     <value type="QString" key="Qt4ProjectManager.Qt4RunConfiguration.ProFile">commAudio_music_player.pro</value>

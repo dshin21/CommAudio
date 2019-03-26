@@ -29,13 +29,15 @@ SOURCES += \
         mainwindow.cpp \
     local_playback.cpp \
     server.cpp \
-    client.cpp
+    client.cpp \
+    stream_from_server.cpp
 
 HEADERS += \
         mainwindow.h \
     local_playback.h \
     server.h \
-    client.h
+    client.h \
+    stream_from_server.h
 
 FORMS += \
         mainwindow.ui \

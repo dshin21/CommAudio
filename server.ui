@@ -13,25 +13,25 @@
   <property name="windowTitle">
    <string>Server</string>
   </property>
-  <widget class="QWidget" name="">
+  <widget class="QWidget" name="layoutWidget">
    <property name="geometry">
     <rect>
      <x>6</x>
-     <y>0</y>
-     <width>121</width>
-     <height>431</height>
+     <y>20</y>
+     <width>341</width>
+     <height>121</height>
     </rect>
    </property>
    <layout class="QVBoxLayout" name="verticalLayout">
     <item>
-     <widget class="QPushButton" name="pushButton">
+     <widget class="QPushButton" name="btn_select_music_folder">
       <property name="font">
        <font>
         <pointsize>9</pointsize>
        </font>
       </property>
       <property name="text">
-       <string>Select File(s)</string>
+       <string>Select a Music Folder</string>
       </property>
      </widget>
     </item>
@@ -44,12 +44,12 @@
     </item>
    </layout>
   </widget>
-  <widget class="QWidget" name="">
+  <widget class="QWidget" name="layoutWidget">
    <property name="geometry">
     <rect>
-     <x>140</x>
-     <y>80</y>
-     <width>211</width>
+     <x>10</x>
+     <y>200</y>
+     <width>331</width>
      <height>91</height>
     </rect>
    </property>
@@ -74,11 +74,11 @@
     </item>
    </layout>
   </widget>
-  <widget class="QWidget" name="">
+  <widget class="QWidget" name="layoutWidget">
    <property name="geometry">
     <rect>
-     <x>150</x>
-     <y>260</y>
+     <x>80</x>
+     <y>330</y>
      <width>191</width>
      <height>25</height>
     </rect>
@@ -95,6 +95,57 @@
      <widget class="QPushButton" name="pushButton_3">
       <property name="text">
        <string>STOP</string>
+      </property>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QPushButton" name="btn_server_start_server">
+   <property name="geometry">
+    <rect>
+     <x>130</x>
+     <y>160</y>
+     <width>101</width>
+     <height>23</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>START SERVER</string>
+   </property>
+  </widget>
+  <widget class="QWidget" name="">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>0</y>
+     <width>291</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <layout class="QHBoxLayout" name="horizontalLayout_2">
+    <item>
+     <widget class="QLabel" name="label_server_ip">
+      <property name="font">
+       <font>
+        <weight>75</weight>
+        <bold>true</bold>
+       </font>
+      </property>
+      <property name="text">
+       <string>IP:   </string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QLabel" name="label_server_port">
+      <property name="font">
+       <font>
+        <weight>75</weight>
+        <bold>true</bold>
+       </font>
+      </property>
+      <property name="text">
+       <string>Port:   </string>
       </property>
      </widget>
     </item>

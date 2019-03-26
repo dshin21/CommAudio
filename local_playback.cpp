@@ -3,7 +3,8 @@
 #include <QDebug>
 
 LocalPlayback::LocalPlayback(QObject *parent)
-    : QObject(parent), music_player(new QMediaPlayer)
+    : QObject(parent),
+      music_player(new QMediaPlayer)
 {
 
 }

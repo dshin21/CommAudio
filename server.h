@@ -4,9 +4,16 @@
 #include <QLabel>
 #include <QAbstractItemView>
 #include <QStringList>
-
+#include <QFileDialog>
+#include <QFileInfoList>
 #include <QStringListModel>
+#include <QTcpServer>
+#include <QtNetwork>
+
+
 #include "ui_server.h"
+
+#include <QDebug>
 
 namespace Ui
 {
@@ -22,13 +29,23 @@ public:
 
 private:
     Ui::Server *ui;
-    QStringListModel *model;
+    QTcpServer *tcp_server;
+    QFileInfoList file_info_list;
+    QList<QString> playlist;
+    QList<QTcpSocket *> clients;
+    QList<QDataStream *> dataStreamList;
+
+
+    QByteArray create_header();
 
 
 signals:
 
 public slots:
-    void ItemClicked (QModelIndex& index );
+    void slot_server_onclick_select_music_folder();
+    void slot_server_onclick_start_server();
+    void slot_server_add_new_client();
+    void slot_server_received_data_from_client();
 
 };
 
