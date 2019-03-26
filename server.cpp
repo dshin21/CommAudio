@@ -43,7 +43,6 @@ void Server::slot_server_onclick_select_music_folder()
     // bind combobox and listview to the playlist
     ui->server_playlist->setModel(ui_playlist_model);
     ui->comboBox->setModel(ui_playlist_model);
-
 }
 
 void Server::slot_server_onclick_start_server()
@@ -56,7 +55,6 @@ void Server::slot_server_onclick_start_server()
     }else{
         QString server_ip;
         QList<QHostAddress> all_ip = QNetworkInterface::allAddresses();
-        qDebug()<< all_ip;
 
         for (int i = 0; i < all_ip.size(); ++i)
         {
@@ -76,6 +74,8 @@ void Server::slot_server_onclick_start_server()
 
 void Server::slot_server_add_new_client()
 {
+    qDebug() << "hihi";
+
     clients.append(tcp_server->nextPendingConnection());
     connect(clients.last(), &QAbstractSocket::disconnected, clients.last(), &QObject::deleteLater);
     connect(clients.last(), &QIODevice::readyRead, this, &Server::slot_server_received_data_from_client);
@@ -85,7 +85,7 @@ void Server::slot_server_add_new_client()
     for (int i = 0; i < clients.size(); i++)
         clients[i]->write(qPrintable(header));
 
-    qDebug()<<header;
+    qDebug() << "server:" << header;
 }
 
 QByteArray Server::create_header()
