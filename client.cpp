@@ -62,12 +62,14 @@ void Client::init_download_ui(QList<QString> received_playlist)
         ui->download_combo_box->addItem(received_playlist[i]);
 }
 
-void Client::init_voice_ui(QList<QString>)
+void Client::init_voice_ui(QList<QString> received_ip_list)
 {
     connect(ui->voice_combo_box, &QComboBox::currentTextChanged, voice, &Voice::slot_get_voice_combo_box_text);
     connect(ui->btn_voice_connect, &QPushButton::clicked, voice, &Voice::slot_voice_onclick_connect);
     //TODO:
 //    connect(ui->btn_voice_disconnect, &QPushButton::clicked, voice, &Voice::slot_voice_onclick_disconnect);
+    for(int i = 0; i < received_ip_list.size(); ++i)
+        ui->download_combo_box->addItem(received_ip_list[i]);
 }
 
 void Client::slot_local_playback_onclick_choose_song()
@@ -102,6 +104,7 @@ void Client::slot_client_received_data_from_server()
 
         init_stream_from_server_ui(received_playlist);
         init_download_ui(received_playlist);
+        init_voice_ui(received_ip_list);
         //        TODO:
         //        init_join_chat_ui(received_ip_list);
     }
