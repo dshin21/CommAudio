@@ -28,6 +28,8 @@ public:
     void init_client_ui();
     void init_local_playback_ui();
     void init_stream_from_server_ui();
+    QList<QString> remove_header_info(QString);
+
 
 private:
     Ui::Client *ui;

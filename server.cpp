@@ -74,8 +74,6 @@ void Server::slot_server_onclick_start_server()
 
 void Server::slot_server_add_new_client()
 {
-    qDebug() << "hihi";
-
     clients.append(tcp_server->nextPendingConnection());
     connect(clients.last(), &QAbstractSocket::disconnected, clients.last(), &QObject::deleteLater);
     connect(clients.last(), &QIODevice::readyRead, this, &Server::slot_server_received_data_from_client);
@@ -84,16 +82,14 @@ void Server::slot_server_add_new_client()
 
     for (int i = 0; i < clients.size(); i++)
         clients[i]->write(qPrintable(header));
-
-    qDebug() << "server:" << header;
 }
 
 QByteArray Server::create_header()
 {
-    QString temp("<");
+    QString temp("I<");
 
     for(int i = 0; i < playlist.size(); ++i)
-        temp.append(playlist[i] + ";");
+        temp.append(playlist[i]+ ";");
 
     temp.append("|");
 
