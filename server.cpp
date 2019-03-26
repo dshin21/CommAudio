@@ -145,16 +145,5 @@ void Server::slot_server_received_data_from_client()
 
             create_download_header(client_requested_stream_file, socket);
         }
-
-        if(received_data_string[0] == "voice"){
-            if(clients.size() != 1){
-                QString ip_list("V");
-                for (int i = 0; i < clients.size(); i++){
-                    if(clients[i]->peerAddress().toString() != socket->peerAddress().toString())
-                        ip_list.append(clients[i]->peerAddress().toString());
-                }
-                socket->write(qPrintable(ip_list));
-            }
-        }
     }
 }

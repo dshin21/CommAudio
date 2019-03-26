@@ -27,6 +27,7 @@ public:
     void send_header();
     void set_socket(QTcpSocket *client_socket);
 
+
 signals:
 
 public slots:

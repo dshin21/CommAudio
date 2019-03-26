@@ -109,10 +109,6 @@ void Client::slot_client_received_data_from_server()
             init_stream_from_server_ui(received_playlist);
             init_download_ui(received_playlist);
             init_voice_ui(received_ip_list);
-        }else if(received_data_string == 'V'){
-            received_data_string = QString(tcp_socket->readAll());
-            QList<QString> received_ip_list = received_data_string.split(":");
-            qDebug() << received_ip_list[received_ip_list.size()-1];
         }
     }
 }
