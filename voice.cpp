@@ -43,6 +43,8 @@ void Voice::ready_voice()
 void Voice::slot_voice_onclick_connect()
 {
     voice_in = new QAudioInput(format, this);
+    voice_socket_out = new QTcpSocket(this);
+
     voice_socket_out->connectToHost(QHostAddress(combo_box_text), 5050, QIODevice::WriteOnly);
     voice_in->start(voice_socket_out);
 }
