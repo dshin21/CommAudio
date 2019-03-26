@@ -34,7 +34,8 @@ void Server::slot_server_onclick_select_music_folder()
 
     for (int i = 0; i < file_info_list.size(); ++i){
         ui_playlist << file_info_list[i].fileName();
-        playlist.append(file_info_list[i].absoluteFilePath());
+        playlist_abs.append(file_info_list[i].absoluteFilePath());
+        playlist_rel.append(file_info_list[i].fileName());
     }
 
 
@@ -88,8 +89,9 @@ QByteArray Server::create_header()
 {
     QString temp("I<");
 
-    for(int i = 0; i < playlist.size(); ++i)
-        temp.append(playlist[i]+ ";");
+    for(int i = 0; i < playlist_rel.size(); ++i)
+        temp.append(playlist_rel[i]+ ";");
+    qDebug()<<temp;
 
     temp.append("|");
 

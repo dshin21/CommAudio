@@ -31,7 +31,8 @@ private:
     Ui::Server *ui;
     QTcpServer *tcp_server;
     QFileInfoList file_info_list;
-    QList<QString> playlist;
+    QList<QString> playlist_abs;
+    QList<QString> playlist_rel;
     QList<QTcpSocket *> clients;
     QList<QDataStream *> dataStreamList;
 

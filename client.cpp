@@ -24,7 +24,6 @@ void Client::init_client_ui()
     connect(ui->btn_client_go, &QPushButton::clicked, this, &Client::slot_client_connect_to_server);
 
     init_local_playback_ui();
-    init_stream_from_server_ui();
 }
 
 void Client::slot_client_connect_to_server()
@@ -35,18 +34,6 @@ void Client::slot_client_connect_to_server()
     quint16 server_port = quint16(ui->lineEdit_client_port->text().toShort());
 
     tcp_socket->connectToHost(QHostAddress(server_ip), server_port);
-
-    //    QString client_ip;
-    //    QList<QHostAddress> all_ip = QNetworkInterface::allAddresses();
-
-    //    for (int i = 0; i < all_ip.size(); ++i)
-    //    {
-    //        if (all_ip[i].toIPv4Address())
-    //        {
-    //            client_ip = all_ip.at(i).toString();
-    //            break;
-    //        }
-    //    }
 }
 
 void Client::init_local_playback_ui()
@@ -64,9 +51,10 @@ void Client::slot_local_playback_onclick_choose_song()
                                                                 nullptr);
 }
 
-void Client::init_stream_from_server_ui()
+void Client::init_stream_from_server_ui(QList<QString> received_playlist)
 {
-
+    for(int i = 0; i < received_playlist.size(); ++i)
+        ui->stream_combo_box->addItem(received_playlist[i]);
 }
 
 
@@ -77,13 +65,14 @@ void Client::slot_client_received_data_from_server()
 
     if(received_data_string.at(0) == 'I'){
         //initial connect data
-
         QList<QString> received_data = remove_header_info(received_data_string);
         QList<QString> received_playlist = received_data[0].split(";");
         QList<QString> received_ip_list = received_data[1].split(";");
 
-        qDebug() << received_playlist << "\n";
-        qDebug() << received_ip_list;
+        init_stream_from_server_ui(received_playlist);
+        //TODO:
+//        init_join_chat_ui(received_ip_list);
+//        init_download_music_ui(received_playlist);
     }
 }
 
