@@ -8,12 +8,7 @@ Voice::Voice(QObject *parent) : QObject(parent)
     format.setCodec("audio/pcm");
     format.setByteOrder(QAudioFormat::LittleEndian);
     format.setSampleType(QAudioFormat::SignedInt);
-}
-
-void Voice::set_server(QTcpServer *tcp_server)
-{
-    voice_server = voice_server;
-
+    voice_server = new QTcpServer(this);
     QList<QHostAddress> all_ip = QNetworkInterface::allAddresses();
 
     for (int i = 0; i < all_ip.size(); ++i)
@@ -26,6 +21,13 @@ void Voice::set_server(QTcpServer *tcp_server)
     }
 }
 
+void Voice::set_server(QTcpServer *tcp_server)
+{
+    //    voice_server = voice_server;
+
+
+}
+
 void Voice::slot_get_voice_combo_box_text(const QString &text)
 {
     combo_box_text = text;
@@ -33,11 +35,13 @@ void Voice::slot_get_voice_combo_box_text(const QString &text)
 
 void Voice::slot_voice_onclick_connect()
 {
+    qDebug("The client server is running on\n\nIP: %s\nport: %d\n\n", qPrintable(voice_server_ip), voice_server->serverPort());
+
     start_server();
     voice_in = new QAudioInput(format, this);
     voice_socket_out = new QTcpSocket(this);
 
-    voice_socket_out->connectToHost(QHostAddress(combo_box_text), 5050, QIODevice::WriteOnly);
+    voice_socket_out->connectToHost(QHostAddress(combo_box_text), 5151, QIODevice::WriteOnly);
     voice_in->start(voice_socket_out);
     qDebug()<<"connected";
 }
@@ -45,9 +49,9 @@ void Voice::slot_voice_onclick_connect()
 
 void Voice::start_server()
 {
-    if (!voice_server->listen(QHostAddress::Any, 5050)) return;
+    if (!voice_server->listen(QHostAddress::Any, 5151))
+        return;
     connect(voice_server, &QTcpServer::newConnection, this, &Voice::incoming_connection_request);
-    qDebug("The client server is running on\n\nIP: %s\nport: %d\n\n", qPrintable(voice_server_ip), voice_server->serverPort());
 }
 
 void Voice::incoming_connection_request()

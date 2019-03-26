@@ -12,11 +12,11 @@ Client::Client(QWidget *parent)
 {
     ui->setupUi(this);
     tcp_socket = new QTcpSocket(this);
-    tcp_server = new QTcpServer(this);
+
 
     stream_from_server->set_socket(tcp_socket);
     download->set_socket(tcp_socket);
-    voice->set_server(tcp_server);
+//    voice->set_server(tcp_server);
 
     init_client_ui();
 }
