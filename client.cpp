@@ -68,8 +68,9 @@ void Client::init_voice_ui(QList<QString> received_ip_list)
     connect(ui->btn_voice_connect, &QPushButton::clicked, voice, &Voice::slot_voice_onclick_connect);
     //TODO:
 //    connect(ui->btn_voice_disconnect, &QPushButton::clicked, voice, &Voice::slot_voice_onclick_disconnect);
+    qDebug() << received_ip_list;
     for(int i = 0; i < received_ip_list.size(); ++i)
-        ui->download_combo_box->addItem(received_ip_list[i]);
+        ui->voice_combo_box->addItem(received_ip_list[i]);
 }
 
 void Client::slot_local_playback_onclick_choose_song()
