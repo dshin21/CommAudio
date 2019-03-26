@@ -16,6 +16,7 @@ public:
     QTcpServer *voice_server;
     QTcpSocket *voice_socket;
     QTcpSocket *voice_socket_out;
+    QString voice_server_ip;
     QAudioFormat format;
     QAudioInput *voice_in;
     QAudioOutput *voice_out;

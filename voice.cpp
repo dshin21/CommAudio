@@ -13,6 +13,17 @@ Voice::Voice(QObject *parent) : QObject(parent)
 void Voice::set_server(QTcpServer *tcp_server)
 {
     voice_server = voice_server;
+
+    QList<QHostAddress> all_ip = QNetworkInterface::allAddresses();
+
+    for (int i = 0; i < all_ip.size(); ++i)
+    {
+        if (all_ip[i].toIPv4Address())
+        {
+            voice_server_ip = all_ip.at(i).toString();
+            break;
+        }
+    }
 }
 
 void Voice::slot_get_voice_combo_box_text(const QString &text)
@@ -36,6 +47,7 @@ void Voice::start_server()
 {
     if (!voice_server->listen(QHostAddress::Any, 5050)) return;
     connect(voice_server, &QTcpServer::newConnection, this, &Voice::incoming_connection_request);
+    qDebug("The client server is running on\n\nIP: %s\nport: %d\n\n", qPrintable(voice_server_ip), voice_server->serverPort());
 }
 
 void Voice::incoming_connection_request()
