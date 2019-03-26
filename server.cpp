@@ -107,8 +107,6 @@ QByteArray Server::create_initial_header()
 
 void Server::create_download_header(QFile *client_requested_stream_file, QTcpSocket *socket)
 {
-    QString temp("D");
-
     while (!client_requested_stream_file->atEnd())
     {
         QByteArray temp = client_requested_stream_file->readLine();
@@ -122,32 +120,30 @@ void Server::slot_server_received_data_from_client()
 {
     QTcpSocket *socket = qobject_cast<QTcpSocket *>(sender());
 
-    if (socket ==  nullptr) return;
+    if (socket !=  nullptr){
+        QList<QString> received_data_string = QString(socket->readAll()).split(";");
 
-    QList<QString> received_data_string = QString(socket->readAll()).split(";");
+        if(received_data_string[0] == "stream"){
+            int file_idx = received_data_string[1].toInt();
+            QFile *client_requested_stream_file = new QFile(playlist_abs[file_idx]);
 
-    qDebug()<<"received: "<<received_data_string;
+            if (!client_requested_stream_file->isOpen() &&
+                    !client_requested_stream_file->open(QIODevice::ReadOnly)) return;
 
-    if(received_data_string[0] == "stream"){
-        int file_idx = received_data_string[1].toInt();
-        QFile *client_requested_stream_file = new QFile(playlist_abs[file_idx]);
+            dataStreamList.append(new QDataStream(socket));
 
-        if (!client_requested_stream_file->isOpen() &&
-                !client_requested_stream_file->open(QIODevice::ReadOnly)) return;
+            QByteArray content = client_requested_stream_file->readAll();
+            *dataStreamList.last() << content;
+            client_requested_stream_file->close();
+        }
 
-        dataStreamList.append(new QDataStream(socket));
+        if(received_data_string[0] == "download"){
+            int file_idx = received_data_string[1].toInt();
+            QFile *client_requested_stream_file = new QFile(playlist_abs[file_idx]);
+            qDebug()<<client_requested_stream_file;
+            if (!client_requested_stream_file->open(QIODevice::ReadOnly)) return;
 
-        QByteArray content = client_requested_stream_file->readAll();
-        *dataStreamList.last() << content;
-        client_requested_stream_file->close();
-    }
-
-    if(received_data_string[0] == "download"){
-        int file_idx = received_data_string[1].toInt();
-        QFile *client_requested_stream_file = new QFile(playlist_abs[file_idx]);
-        qDebug()<<client_requested_stream_file;
-        if (!client_requested_stream_file->open(QIODevice::ReadOnly)) return;
-
-        create_download_header(client_requested_stream_file, socket);
+            create_download_header(client_requested_stream_file, socket);
+        }
     }
 }

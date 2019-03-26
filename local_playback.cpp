@@ -25,10 +25,6 @@ void LocalPlayback::play()
             local_player->setMedia(QUrl::fromLocalFile(current_file));
             local_player->play();
         }
-        else
-        {
-            qDebug() << "Error: File not able to be played";
-        }
     }
     else
     {
