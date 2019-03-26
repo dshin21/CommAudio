@@ -4,6 +4,8 @@
 #include <QFile>
 #include <QObject>
 #include <QTcpSocket>
+#include <QDir>
+#include <QFileDialog>
 
 class DownLoad : public QObject
 {
@@ -11,16 +13,14 @@ class DownLoad : public QObject
 public:
     explicit DownLoad(QObject *parent = nullptr);
 
+    QTcpSocket *tcp_socket;
     QFile *download_file;
-    bool started_download;
     QString file_name;
     int combo_box_idx;
-    QTcpSocket *tcp_socket;
-
+    bool started_download;
 
     void send_header();
     void set_socket(QTcpSocket *client_socket);
-
 
 signals:
 
@@ -29,8 +29,6 @@ public slots:
     void slot_combobox_changed(const QString &text);
     void slot_get_stream_combo_box_idx(int idx);
     void download();
-
-
 };
 
 #endif // DOWNLOAD_H

@@ -30,6 +30,7 @@ public:
     void init_client_ui();
     void init_local_playback_ui();
     void init_stream_from_server_ui(QList<QString>);
+    void init_download_ui(QList<QString> received_playlist);
     QList<QString> remove_header_info(QString);
 
 

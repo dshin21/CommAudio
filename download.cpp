@@ -1,8 +1,5 @@
 #include "download.h"
 
-#include <QDir>
-#include <QFileDialog>
-
 DownLoad::DownLoad(QObject *parent)
     : QObject(parent),
       started_download(false)
@@ -14,7 +11,6 @@ void DownLoad::slot_stream_onclick_download()
 {
     send_header();
     started_download = true;
-    qDebug() << "after sending header";
 }
 
 void DownLoad::slot_combobox_changed(const QString &text)
@@ -47,11 +43,9 @@ void DownLoad::set_socket(QTcpSocket *client_socket)
 void DownLoad::download()
 {
     if(started_download){
-        QDir OutputFolder = QFileDialog::getExistingDirectory(nullptr, ("Please Select a Folder"), QDir::currentPath());
-        download_file = new QFile(OutputFolder.absolutePath() + "//" + file_name);
-        qDebug() <<file_name;
-        if (!download_file->open(QIODevice::WriteOnly | QIODevice::Append)) return;
-        started_download = true;
+        QDir folder = QFileDialog::getExistingDirectory(nullptr, ("Please Select a Folder"), QDir::currentPath());
+        download_file = new QFile(folder.absolutePath() + "//" + file_name);
+
         if (!download_file->isOpen())
             if (!download_file->open(QIODevice::WriteOnly | QIODevice::Append))
                 return;
