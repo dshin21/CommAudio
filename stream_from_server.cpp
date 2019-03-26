@@ -24,6 +24,7 @@ void StreamFromServer::set_socket(QTcpSocket *client_socket)
     tcp_socket = client_socket;
 }
 
+
 void StreamFromServer::play()
 {
     if(!started_stream){
@@ -68,3 +69,7 @@ void StreamFromServer::slot_tab_idx_changed(int idx)
     started_stream = false;
     tcp_socket->readAll();
 }
+
+
+
+

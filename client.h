@@ -5,6 +5,7 @@
 
 #include "local_playback.h"
 #include "stream_from_server.h"
+#include "download.h"
 #include "ui_client.h"
 
 namespace Ui
@@ -20,6 +21,7 @@ public:
 
     LocalPlayback *local_playback;
     StreamFromServer *stream_from_server;
+    DownLoad *download;
 
     Client(QWidget *parent = nullptr);
     ~Client();

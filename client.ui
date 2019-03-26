@@ -45,7 +45,7 @@
     <number>1</number>
    </property>
    <property name="currentIndex">
-    <number>1</number>
+    <number>2</number>
    </property>
    <property name="tabSpacing">
     <number>6</number>
@@ -317,18 +317,47 @@ background-image: url(:/images/btn_play.png);</string>
      </layout>
     </widget>
    </widget>
-   <widget class="QWidget" name="download_music_from_server">
-    <property name="geometry">
-     <rect>
-      <x>0</x>
-      <y>0</y>
-      <width>574</width>
-      <height>247</height>
-     </rect>
-    </property>
+   <widget class="QWidget" name="page">
     <attribute name="label">
      <string>Download Music From Server</string>
     </attribute>
+    <widget class="QComboBox" name="download_combo_box">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>30</y>
+       <width>421</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>10</pointsize>
+       <weight>50</weight>
+       <bold>false</bold>
+      </font>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="btn_download">
+     <property name="geometry">
+      <rect>
+       <x>150</x>
+       <y>110</y>
+       <width>131</width>
+       <height>23</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>10</pointsize>
+       <weight>50</weight>
+       <bold>false</bold>
+      </font>
+     </property>
+     <property name="text">
+      <string>Download Music</string>
+     </property>
+    </widget>
    </widget>
    <widget class="QWidget" name="join_multicast">
     <property name="geometry">

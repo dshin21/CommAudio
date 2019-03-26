@@ -82,13 +82,13 @@ void Server::slot_server_add_new_client()
     connect(clients.last(), &QAbstractSocket::disconnected, clients.last(), &QObject::deleteLater);
     connect(clients.last(), &QIODevice::readyRead, this, &Server::slot_server_received_data_from_client);
 
-    QByteArray header = create_header();
+    QByteArray header = create_initial_header();
 
     for (int i = 0; i < clients.size(); i++)
         clients[i]->write(qPrintable(header));
 }
 
-QByteArray Server::create_header()
+QByteArray Server::create_initial_header()
 {
     QString temp("I<");
 
@@ -103,6 +103,19 @@ QByteArray Server::create_header()
     temp.append('>');
 
     return temp.toUtf8();
+}
+
+void Server::create_download_header(QFile *client_requested_stream_file, QTcpSocket *socket)
+{
+    QString temp("D");
+
+    while (!client_requested_stream_file->atEnd())
+    {
+        QByteArray temp = client_requested_stream_file->readLine();
+        socket->write(temp);
+    }
+
+    client_requested_stream_file->close();
 }
 
 void Server::slot_server_received_data_from_client()
@@ -127,5 +140,14 @@ void Server::slot_server_received_data_from_client()
         QByteArray content = client_requested_stream_file->readAll();
         *dataStreamList.last() << content;
         client_requested_stream_file->close();
+    }
+
+    if(received_data_string[0] == "download"){
+        int file_idx = received_data_string[1].toInt();
+        QFile *client_requested_stream_file = new QFile(playlist_abs[file_idx]);
+        qDebug()<<client_requested_stream_file;
+        if (!client_requested_stream_file->open(QIODevice::ReadOnly)) return;
+
+        create_download_header(client_requested_stream_file, socket);
     }
 }

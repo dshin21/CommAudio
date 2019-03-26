@@ -1,6 +1,7 @@
 #pragma once
 
 #include <QAudioOutput>
+#include <QFile>
 #include <QObject>
 #include <QTcpSocket>
 
@@ -19,6 +20,7 @@ public:
     int combo_box_idx;
 
     void set_socket(QTcpSocket *client_socket);
+    void send_header();
 
 private:
 
@@ -26,8 +28,8 @@ signals:
 public slots:
     void play();
     void pause();
-    void send_header();
     void slot_get_stream_combo_box_idx(int idx);
     void slot_tab_idx_changed(int idx);
+
 };
 

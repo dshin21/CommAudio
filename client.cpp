@@ -6,11 +6,13 @@ Client::Client(QWidget *parent)
     : QWidget(parent),
       ui(new Ui::Client),
       local_playback(new LocalPlayback),
-      stream_from_server(new StreamFromServer)
+      stream_from_server(new StreamFromServer),
+      download(new DownLoad)
 {
     ui->setupUi(this);
     tcp_socket = new QTcpSocket(this);
     stream_from_server->set_socket(tcp_socket);
+    download->set_socket(tcp_socket);
     init_client_ui();
 }
 
@@ -29,6 +31,7 @@ void Client::init_client_ui()
 void Client::slot_client_connect_to_server()
 {
     connect(tcp_socket, &QIODevice::readyRead, this, &Client::slot_client_received_data_from_server);
+    connect(tcp_socket, &QIODevice::readyRead, download, &DownLoad::download);
 
     QString server_ip = ui->lineEdit_client_ip->text();
     quint16 server_port = quint16(ui->lineEdit_client_port->text().toShort());
@@ -58,17 +61,23 @@ void Client::init_stream_from_server_ui(QList<QString> received_playlist)
     connect(ui->stream_combo_box, QOverload<int>::of(&QComboBox::currentIndexChanged), stream_from_server, &StreamFromServer::slot_get_stream_combo_box_idx);
     connect(ui->toolBox, &QToolBox::currentChanged, stream_from_server, &StreamFromServer::slot_tab_idx_changed);
 
-    for(int i = 0; i < received_playlist.size(); ++i)
+    connect(ui->btn_download, &QPushButton::clicked, download, &DownLoad::slot_stream_onclick_download);
+    connect(ui->download_combo_box, &QComboBox::currentTextChanged, download, &DownLoad::slot_combobox_changed);
+    connect(ui->download_combo_box, QOverload<int>::of(&QComboBox::currentIndexChanged), download, &DownLoad::slot_get_stream_combo_box_idx);
+
+    for(int i = 0; i < received_playlist.size(); ++i){
         ui->stream_combo_box->addItem(received_playlist[i]);
+        ui->download_combo_box->addItem(received_playlist[i]);
+    }
 }
-
-
 
 void Client::slot_client_received_data_from_server()
 {
     QString received_data_string = tcp_socket->peek(1);
+
     if(received_data_string == 'I'){
         //initial connect data
+        qDebug() << "I";
         received_data_string = QString(tcp_socket->readAll());
         QList<QString> received_data = remove_header_info(received_data_string);
         QList<QString> received_playlist = received_data[0].split(";");
@@ -77,7 +86,8 @@ void Client::slot_client_received_data_from_server()
         init_stream_from_server_ui(received_playlist);
         //        TODO:
         //        init_join_chat_ui(received_ip_list);
-        //        init_download_music_ui(received_playlist);
+    }else{
+//        download->download();
     }
 }
 

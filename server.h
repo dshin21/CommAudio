@@ -37,8 +37,8 @@ private:
     QList<QDataStream *> dataStreamList;
 
 
-    QByteArray create_header();
-
+    QByteArray create_initial_header();
+    void create_download_header(QFile *client_requested_stream_file, QTcpSocket *socket);
 
 signals:
 
