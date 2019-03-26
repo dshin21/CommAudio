@@ -8,6 +8,7 @@ Voice::Voice(QObject *parent) : QObject(parent)
     format.setCodec("audio/pcm");
     format.setByteOrder(QAudioFormat::LittleEndian);
     format.setSampleType(QAudioFormat::SignedInt);
+
     voice_server = new QTcpServer(this);
     QList<QHostAddress> all_ip = QNetworkInterface::allAddresses();
 
