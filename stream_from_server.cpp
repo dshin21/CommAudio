@@ -64,10 +64,12 @@ void StreamFromServer::slot_get_stream_combo_box_idx(int idx)
 
 void StreamFromServer::slot_tab_idx_changed(int idx)
 {
-    streamer->stop();
-    streamer = new QAudioOutput(format, this);
-    started_stream = false;
-    tcp_socket->readAll();
+    if(idx != 1){
+        streamer->stop();
+        streamer = new QAudioOutput(format, this);
+        started_stream = false;
+        tcp_socket->readAll();
+    }
 }
 
 
