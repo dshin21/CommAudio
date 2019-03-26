@@ -1,5 +1,6 @@
 #pragma once
 
+#include <QTcpServer>
 #include <QTcpSocket>
 #include <QWidget>
 
@@ -7,6 +8,7 @@
 #include "stream_from_server.h"
 #include "download.h"
 #include "ui_client.h"
+#include "voice.h"
 
 namespace Ui
 {
@@ -18,10 +20,12 @@ class Client : public QWidget
     Q_OBJECT
 public:
     QTcpSocket *tcp_socket;
+    QTcpServer *tcp_server;
 
     LocalPlayback *local_playback;
     StreamFromServer *stream_from_server;
     DownLoad *download;
+    Voice *voice;
 
     Client(QWidget *parent = nullptr);
     ~Client();
@@ -30,7 +34,8 @@ public:
     void init_client_ui();
     void init_local_playback_ui();
     void init_stream_from_server_ui(QList<QString>);
-    void init_download_ui(QList<QString> received_playlist);
+    void init_download_ui(QList<QString>);
+    void init_voice_ui(QList<QString>);
     QList<QString> remove_header_info(QString);
 
 
@@ -43,6 +48,7 @@ public slots:
     void slot_client_connect_to_server();
     void slot_local_playback_onclick_choose_song();
     void slot_client_received_data_from_server();
+
 
 
 };

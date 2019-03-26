@@ -31,7 +31,8 @@ SOURCES += \
     server.cpp \
     client.cpp \
     stream_from_server.cpp \
-    download.cpp
+    download.cpp \
+    voice.cpp
 
 HEADERS += \
         mainwindow.h \
@@ -39,7 +40,8 @@ HEADERS += \
     server.h \
     client.h \
     stream_from_server.h \
-    download.h
+    download.h \
+    voice.h
 
 FORMS += \
         mainwindow.ui \

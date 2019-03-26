@@ -318,6 +318,14 @@ background-image: url(:/images/btn_play.png);</string>
     </widget>
    </widget>
    <widget class="QWidget" name="page">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>0</y>
+      <width>574</width>
+      <height>247</height>
+     </rect>
+    </property>
     <attribute name="label">
      <string>Download Music From Server</string>
     </attribute>
@@ -404,13 +412,13 @@ background-image: url(:/images/btn_play.png);</string>
     <attribute name="label">
      <string>Join Voice Chat</string>
     </attribute>
-    <widget class="QPushButton" name="pushButton_2">
+    <widget class="QComboBox" name="voice_combo_box">
      <property name="geometry">
       <rect>
-       <x>170</x>
-       <y>90</y>
-       <width>81</width>
-       <height>41</height>
+       <x>10</x>
+       <y>20</y>
+       <width>421</width>
+       <height>20</height>
       </rect>
      </property>
      <property name="font">
@@ -420,9 +428,46 @@ background-image: url(:/images/btn_play.png);</string>
        <bold>false</bold>
       </font>
      </property>
-     <property name="text">
-      <string>Join</string>
+    </widget>
+    <widget class="QWidget" name="">
+     <property name="geometry">
+      <rect>
+       <x>100</x>
+       <y>150</y>
+       <width>231</width>
+       <height>61</height>
+      </rect>
      </property>
+     <layout class="QHBoxLayout" name="horizontalLayout_4">
+      <item>
+       <widget class="QPushButton" name="btn_voice_connect">
+        <property name="font">
+         <font>
+          <pointsize>10</pointsize>
+          <weight>50</weight>
+          <bold>false</bold>
+         </font>
+        </property>
+        <property name="text">
+         <string>Connect</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="btn_voice_disconnect">
+        <property name="font">
+         <font>
+          <pointsize>10</pointsize>
+          <weight>50</weight>
+          <bold>false</bold>
+         </font>
+        </property>
+        <property name="text">
+         <string>Disconnect</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
     </widget>
    </widget>
   </widget>

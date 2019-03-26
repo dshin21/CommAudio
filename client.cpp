@@ -7,12 +7,17 @@ Client::Client(QWidget *parent)
       ui(new Ui::Client),
       local_playback(new LocalPlayback),
       stream_from_server(new StreamFromServer),
-      download(new DownLoad)
+      download(new DownLoad),
+      voice(new Voice)
 {
     ui->setupUi(this);
     tcp_socket = new QTcpSocket(this);
+    tcp_server = new QTcpServer(this);
+
     stream_from_server->set_socket(tcp_socket);
     download->set_socket(tcp_socket);
+    voice->set_server(tcp_server);
+
     init_client_ui();
 }
 
@@ -55,7 +60,14 @@ void Client::init_download_ui(QList<QString> received_playlist)
 
     for(int i = 0; i < received_playlist.size(); ++i)
         ui->download_combo_box->addItem(received_playlist[i]);
+}
 
+void Client::init_voice_ui(QList<QString>)
+{
+    connect(ui->voice_combo_box, &QComboBox::currentTextChanged, voice, &Voice::slot_get_voice_combo_box_text);
+    connect(ui->btn_voice_connect, &QPushButton::clicked, voice, &Voice::slot_voice_onclick_connect);
+    //TODO:
+//    connect(ui->btn_voice_disconnect, &QPushButton::clicked, voice, &Voice::slot_voice_onclick_disconnect);
 }
 
 void Client::slot_local_playback_onclick_choose_song()
