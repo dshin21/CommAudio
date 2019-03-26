@@ -19,7 +19,6 @@ void Voice::start_server()
 {
     if (!voice_server->listen(QHostAddress::Any, 5050)) return;
     connect(voice_server, &QTcpServer::newConnection, this, &Voice::incoming_connection_request);
-
 }
 
 void Voice::incoming_connection_request()
@@ -47,6 +46,7 @@ void Voice::slot_voice_onclick_connect()
 
     voice_socket_out->connectToHost(QHostAddress(combo_box_text), 5050, QIODevice::WriteOnly);
     voice_in->start(voice_socket_out);
+    qDebug()<<"connected";
 }
 
 void Voice::slot_get_voice_combo_box_text(const QString &text)

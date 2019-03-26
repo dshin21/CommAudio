@@ -84,8 +84,12 @@ void Server::slot_server_add_new_client()
 
     QByteArray header = create_initial_header();
 
-    for (int i = 0; i < clients.size(); i++)
+    for (int i = 0; i < clients.size(); i++){
+        qDebug() << clients[i];
+
         clients[i]->write(qPrintable(header));
+    }
+
 }
 
 QByteArray Server::create_initial_header()
@@ -140,7 +144,6 @@ void Server::slot_server_received_data_from_client()
         if(received_data_string[0] == "download"){
             int file_idx = received_data_string[1].toInt();
             QFile *client_requested_stream_file = new QFile(playlist_abs[file_idx]);
-            qDebug()<<client_requested_stream_file;
             if (!client_requested_stream_file->open(QIODevice::ReadOnly)) return;
 
             create_download_header(client_requested_stream_file, socket);
