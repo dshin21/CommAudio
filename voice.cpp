@@ -17,7 +17,7 @@ void Voice::set_server(QTcpServer *tcp_server)
 
 void Voice::start_server()
 {
-    if (!voice_server->listen(QHostAddress::Any, 8484)) return;
+    if (!voice_server->listen(QHostAddress::Any, 5050)) return;
     connect(voice_server, &QTcpServer::newConnection, this, &Voice::incoming_connection_request);
 
 }
