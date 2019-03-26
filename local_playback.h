@@ -9,13 +9,14 @@ class LocalPlayback : public QObject
 {
     Q_OBJECT
   public:
-    QMediaPlayer *music_player;
+    QMediaPlayer *local_player;
     QString current_file;
 
     explicit LocalPlayback(QObject *parent = nullptr);
     ~LocalPlayback();
 
   public slots:
-    void music_player_play();
-    void music_player_pause();
+    void play();
+    void pause();
+    //change streamer into this style
 };

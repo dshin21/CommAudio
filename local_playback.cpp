@@ -4,26 +4,26 @@
 
 LocalPlayback::LocalPlayback(QObject *parent)
     : QObject(parent),
-      music_player(new QMediaPlayer)
+      local_player(new QMediaPlayer)
 {
 
 }
 
 LocalPlayback::~LocalPlayback()
 {
-    delete music_player;
+    delete local_player;
 }
 
-void LocalPlayback::music_player_play()
+void LocalPlayback::play()
 {
     QFile file_to_play(current_file);
 
-    if (music_player->state() == QMediaPlayer::StoppedState)
+    if (local_player->state() == QMediaPlayer::StoppedState)
     {
         if (file_to_play.open(QIODevice::ReadOnly))
         {
-            music_player->setMedia(QUrl::fromLocalFile(current_file));
-            music_player->play();
+            local_player->setMedia(QUrl::fromLocalFile(current_file));
+            local_player->play();
         }
         else
         {
@@ -32,13 +32,13 @@ void LocalPlayback::music_player_play()
     }
     else
     {
-        music_player->play();
+        local_player->play();
     }
 }
 
-void LocalPlayback::music_player_pause()
+void LocalPlayback::pause()
 {
-    music_player->pause();
+    local_player->pause();
 }
 
 //TODO: add volume control functionality

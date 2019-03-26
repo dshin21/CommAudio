@@ -23,6 +23,9 @@ void Server::slot_server_onclick_select_music_folder()
     QDir music_folder = QDir(QFileDialog::getExistingDirectory(nullptr,
                                                                "Select a Music Foler",
                                                                QDir::currentPath()));
+    //TODO: remove for prod.
+    music_folder = QDir("C:/Users/danie/Music");
+
     //get only .wav files
     QStringList filter("*.wav");
     music_folder.setNameFilters(filter);

@@ -5,12 +5,12 @@
 Client::Client(QWidget *parent)
     : QWidget(parent),
       ui(new Ui::Client),
-      tcp_socket(new QTcpSocket(this)),
       local_playback(new LocalPlayback),
       stream_from_server(new StreamFromServer)
 {
     ui->setupUi(this);
-
+    tcp_socket = new QTcpSocket(this);
+    stream_from_server->set_socket(tcp_socket);
     init_client_ui();
 }
 
@@ -39,8 +39,8 @@ void Client::slot_client_connect_to_server()
 void Client::init_local_playback_ui()
 {
     connect(ui->btn_local_select_music_file, &QPushButton::clicked, this, &Client::slot_local_playback_onclick_choose_song);
-    connect(ui->btn_local_play, &QPushButton::clicked, local_playback, &LocalPlayback::music_player_play);
-    connect(ui->btn_local_pause, &QPushButton::clicked, local_playback, &LocalPlayback::music_player_pause);
+    connect(ui->btn_local_play, &QPushButton::clicked, local_playback, &LocalPlayback::play);
+    connect(ui->btn_local_pause, &QPushButton::clicked, local_playback, &LocalPlayback::pause);
 }
 
 void Client::slot_local_playback_onclick_choose_song()
@@ -53,28 +53,15 @@ void Client::slot_local_playback_onclick_choose_song()
 
 void Client::init_stream_from_server_ui(QList<QString> received_playlist)
 {
-    connect(ui->btn_stream_play, &QPushButton::clicked, this, &Client::slot_stream_onclick_stream_play);
-    connect(ui->btn_stream_pause, &QPushButton::clicked, this, &Client::slot_stream_onclick_stream_pause);
+    connect(ui->btn_stream_play, &QPushButton::clicked, stream_from_server, &StreamFromServer::play);
+    connect(ui->btn_stream_pause, &QPushButton::clicked, stream_from_server, &StreamFromServer::pause);
+    connect(ui->stream_combo_box, QOverload<int>::of(&QComboBox::currentIndexChanged), stream_from_server, &StreamFromServer::slot_get_stream_combo_box_idx);
+
     for(int i = 0; i < received_playlist.size(); ++i)
         ui->stream_combo_box->addItem(received_playlist[i]);
 }
 
-void Client::slot_stream_onclick_stream_play()
-{
-    if(stream_from_server->start_stream)
-        stream_from_server->audio->resume();
 
-    QString header = "stream;";
-    header.append(QString::number(ui->stream_combo_box->currentIndex()));
-    tcp_socket->write(qPrintable(header));
-    stream_from_server->start_stream = true;
-}
-
-void Client::slot_stream_onclick_stream_pause()
-{
-    if (stream_from_server->start_stream)
-        stream_from_server->audio->suspend();
-}
 
 void Client::slot_client_received_data_from_server()
 {
@@ -92,18 +79,18 @@ void Client::slot_client_received_data_from_server()
         //        init_download_music_ui(received_playlist);
     }
 
-    if(stream_from_server->start_stream)
-        if ((stream_from_server->audio->state() == QAudio::IdleState ||
-             stream_from_server->audio->state() == QAudio::StoppedState)){
-            stream_from_server->audio->start(tcp_socket);
-        }
+//    if(ui->toolBox->currentIndex() == 1){
+//        stream_from_server->data_ready = true;
+//        stream_from_server->play();
+////        //TODO: set started_stream to false when other tabs start
+//    }
 }
 
 QList<QString> Client::remove_header_info(QString received_data_string)
 {
     QString temp = received_data_string;
     temp.remove(0,2);
-    temp.remove(temp.size()-2, 2);
+    temp.remove(temp.size() - 2, 2);
 
     QList<QString> result = temp.split("|");
     result[0].remove(result[0].length()-1, 1);
