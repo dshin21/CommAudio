@@ -1,6 +1,6 @@
 #pragma once
 
-
+#include <QAudioOutput>
 #include <QObject>
 
 class StreamFromServer : public QObject
@@ -9,8 +9,11 @@ class StreamFromServer : public QObject
 public:
     explicit StreamFromServer(QObject *parent = nullptr);
 
+    QAudioOutput *audio;
+    bool is_streaming = false;
+
 private:
-    void stream_populate_combo_box();
+
 signals:
 
 public slots:

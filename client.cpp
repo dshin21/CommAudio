@@ -53,27 +53,38 @@ void Client::slot_local_playback_onclick_choose_song()
 
 void Client::init_stream_from_server_ui(QList<QString> received_playlist)
 {
+    connect(ui->btn_stream_play, &QPushButton::clicked, this, &Client::slot_stream_onclick_stream_play);
     for(int i = 0; i < received_playlist.size(); ++i)
         ui->stream_combo_box->addItem(received_playlist[i]);
 }
 
-
+void Client::slot_stream_onclick_stream_play()
+{
+    QString header = "stream;";
+    header.append(QString::number(ui->stream_combo_box->currentIndex()));
+    stream_from_server->is_streaming = true;
+    tcp_socket->write(qPrintable(header));
+}
 
 void Client::slot_client_received_data_from_server()
 {
-    QString received_data_string = QString(tcp_socket->readAll());
-
-    if(received_data_string.at(0) == 'I'){
+    QString received_data_string = tcp_socket->peek(1);
+    if(received_data_string == 'I'){
         //initial connect data
+        received_data_string = QString(tcp_socket->readAll());
         QList<QString> received_data = remove_header_info(received_data_string);
         QList<QString> received_playlist = received_data[0].split(";");
         QList<QString> received_ip_list = received_data[1].split(";");
 
         init_stream_from_server_ui(received_playlist);
-        //TODO:
-//        init_join_chat_ui(received_ip_list);
-//        init_download_music_ui(received_playlist);
+        //        TODO:
+        //        init_join_chat_ui(received_ip_list);
+        //        init_download_music_ui(received_playlist);
     }
+
+    if(stream_from_server->is_streaming)
+        if ((stream_from_server->audio->state() == QAudio::IdleState || stream_from_server->audio->state() == QAudio::StoppedState))
+            stream_from_server->audio->start(tcp_socket);
 }
 
 QList<QString> Client::remove_header_info(QString received_data_string)
@@ -88,3 +99,12 @@ QList<QString> Client::remove_header_info(QString received_data_string)
     return result;
 }
 
+
+//void Client::streamStateChange()
+//{
+//    if (audio->state() != QAudio::ActiveState && tcpSocket->bytesAvailable() == 0 && !multicast)
+//    {
+
+//        streaming = false;
+//    }
+//}

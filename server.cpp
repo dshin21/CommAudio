@@ -91,7 +91,6 @@ QByteArray Server::create_header()
 
     for(int i = 0; i < playlist_rel.size(); ++i)
         temp.append(playlist_rel[i]+ ";");
-    qDebug()<<temp;
 
     temp.append("|");
 
@@ -105,36 +104,27 @@ QByteArray Server::create_header()
 
 void Server::slot_server_received_data_from_client()
 {
-    QTcpSocket *socket = new QTcpSocket(sender());
+    QTcpSocket *socket = qobject_cast<QTcpSocket *>(sender());
 
-    if (socket ==  nullptr)
-        return;
+    if (socket ==  nullptr) return;
 
-    QString received_data = socket->readAll();
+    QList<QString> received_data_string = QString(socket->readAll()).split(";");
 
-    qDebug() << "data: " << received_data;
-    if (received_data[0] == '2')
-    {
-        received_data = received_data.remove(0, 1);
-        for (int i = 0; i < file_info_list.size(); i++)
+    if(received_data_string[0] == "stream"){
+        int file_idx = received_data_string[1].toInt();
+        QFile *client_requested_stream_file = new QFile(playlist_abs[file_idx]);
+        if (!client_requested_stream_file->isOpen())
         {
-            if (file_info_list[i].absoluteFilePath().contains(received_data))
+            if (!client_requested_stream_file->open(QIODevice::ReadOnly))
             {
-                QFile *streamFile = new QFile(file_info_list[i].absoluteFilePath());
-                if (!streamFile->isOpen())
-                {
-                    if (!streamFile->open(QIODevice::ReadOnly))
-                    {
-                        return;
-                    }
-                }
-                dataStreamList.append(new QDataStream(socket));
-
-                QByteArray content = streamFile->readAll();
-                *dataStreamList.last() << content;
-                streamFile->close();
-                break;
+                return;
             }
         }
+
+        dataStreamList.append(new QDataStream(socket));
+
+        QByteArray content = client_requested_stream_file->readAll();
+        *dataStreamList.last() << content;
+        client_requested_stream_file->close();
     }
 }
