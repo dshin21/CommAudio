@@ -34,7 +34,7 @@ void Voice::slot_voice_onclick_connect()
 void Voice::slot_voice_onclick_disconnect()
 {
     voice_in->stop();
-    voice_out->stop();
+    voice_out->suspend();
 //    voice_socket->close();
 //    voice_socket_out->close();
 }
