@@ -80,7 +80,6 @@ void Voice::send_header()
 {
     QString header = "voice;";
     tcp_socket->write(qPrintable(header));
-    qDebug() <<"send header";
 }
 
 
