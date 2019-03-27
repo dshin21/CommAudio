@@ -13,6 +13,7 @@ public:
     explicit Voice(QObject *parent = nullptr);
 
     QTcpSocket *tcp_socket;
+
     QTcpServer *voice_server = nullptr;
     QTcpSocket *voice_socket = nullptr;
     QTcpSocket *voice_socket_out = nullptr;
@@ -35,6 +36,7 @@ public slots:
     void incoming_connection_request();
     void ready_voice();
     void slot_voice_onclick_connect();
+    void slot_voice_onclick_disconnect();
     void slot_get_voice_combo_box_text(const QString &text); //TODO: refact all these to get combo_box_idx
     void slot_tab_idx_changed(int idx);
 

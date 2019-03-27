@@ -31,6 +31,14 @@ void Voice::slot_voice_onclick_connect()
     voice_in->start(voice_socket_out);
 }
 
+void Voice::slot_voice_onclick_disconnect()
+{
+    voice_in->stop();
+    voice_out->stop();
+//    voice_socket->close();
+//    voice_socket_out->close();
+}
+
 void Voice::start_server()
 {
     voice_server = new QTcpServer(this);

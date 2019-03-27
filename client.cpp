@@ -66,11 +66,9 @@ void Client::init_voice_ui(QList<QString> received_ip_list)
 {
     connect(ui->voice_combo_box, &QComboBox::currentTextChanged, voice, &Voice::slot_get_voice_combo_box_text);
     connect(ui->btn_voice_connect, &QPushButton::clicked, voice, &Voice::slot_voice_onclick_connect);
+    connect(ui->btn_voice_disconnect, &QPushButton::clicked, voice, &Voice::slot_voice_onclick_disconnect);
     connect(ui->toolBox, &QToolBox::currentChanged, voice, &Voice::slot_tab_idx_changed);
 
-    //TODO:
-    //    connect(ui->btn_voice_disconnect, &QPushButton::clicked, voice, &Voice::slot_voice_onclick_disconnect);
-    //    qDebug() << received_ip_list;
     ui->voice_combo_box->clear();
 
     for(int i = 0; i < received_ip_list.size(); ++i)
@@ -110,8 +108,6 @@ void Client::slot_client_received_data_from_server()
         init_stream_from_server_ui(received_playlist);
         init_download_ui(received_playlist);
         init_voice_ui(received_ip_list);
-    }else if(received_data_string == 'V'){
-//        received_data_string = QString(tcp_socket->readAll());
     }
 }
 
