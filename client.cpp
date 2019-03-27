@@ -70,7 +70,9 @@ void Client::init_voice_ui(QList<QString> received_ip_list)
 
     //TODO:
     //    connect(ui->btn_voice_disconnect, &QPushButton::clicked, voice, &Voice::slot_voice_onclick_disconnect);
-    qDebug() << received_ip_list;
+    //    qDebug() << received_ip_list;
+    ui->voice_combo_box->clear();
+
     for(int i = 0; i < received_ip_list.size(); ++i)
         ui->voice_combo_box->addItem(received_ip_list[i]);
 }
@@ -97,8 +99,7 @@ void Client::slot_client_connect_to_server()
 void Client::slot_client_received_data_from_server()
 {
     QString received_data_string = tcp_socket->peek(1);
-    //    if(received_data_string != '\u0002'){
-    //        qDebug() << received_data_string;
+
     if(received_data_string == 'I'){
         //initial connect data
         received_data_string = QString(tcp_socket->readAll());
@@ -110,11 +111,8 @@ void Client::slot_client_received_data_from_server()
         init_download_ui(received_playlist);
         init_voice_ui(received_ip_list);
     }else if(received_data_string == 'V'){
-        received_data_string = QString(tcp_socket->readAll());
-        QList<QString> received_ip_list = received_data_string.split(":");
-        qDebug() << received_ip_list[received_ip_list.size()-1];
+//        received_data_string = QString(tcp_socket->readAll());
     }
-    //    }
 }
 
 QList<QString> Client::remove_header_info(QString received_data_string)
