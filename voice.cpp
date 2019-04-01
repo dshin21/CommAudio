@@ -24,8 +24,8 @@ void Voice::slot_get_voice_combo_box_text(const QString &text)
 
 void Voice::slot_voice_onclick_connect()
 {
-//    if(voice_in->state() == QAudio::SuspendedState)
-//        voice_in->resume();
+    if(connected)
+        voice_in->resume();
     start_server();
     voice_in = new QAudioInput(format, this);
 
