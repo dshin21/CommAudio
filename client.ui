@@ -429,7 +429,7 @@ background-image: url(:/images/btn_play.png);</string>
       </font>
      </property>
     </widget>
-    <widget class="QWidget" name="">
+    <widget class="QWidget" name="layoutWidget">
      <property name="geometry">
       <rect>
        <x>100</x>
@@ -504,7 +504,7 @@ background-image: url(:/images/btn_play.png);</string>
     <item>
      <widget class="QLineEdit" name="lineEdit_client_ip">
       <property name="text">
-       <string>192.168.0.47</string>
+       <string>192.168.0.48</string>
       </property>
      </widget>
     </item>
