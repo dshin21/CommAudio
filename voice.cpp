@@ -62,7 +62,6 @@ void Voice::start_server()
     }
 
     connect(voice_server, &QTcpServer::newConnection, this, &Voice::incoming_connection_request);
-    qDebug("The client server is running on\n\nIP: %s\nport: %d\n\n", qPrintable(voice_server_ip), voice_server->serverPort());
 }
 
 void Voice::incoming_connection_request()
