@@ -26,12 +26,14 @@ void Voice::slot_voice_onclick_connect()
 {
     if(connected)
         voice_in->resume();
-    start_server();
-    voice_in = new QAudioInput(format, this);
+    else{
+        start_server();
+        voice_in = new QAudioInput(format, this);
 
-    voice_socket_out->connectToHost(QHostAddress(combo_box_text), 5151, QIODevice::WriteOnly);
-    voice_in->start(voice_socket_out);
-    connected = true;
+        voice_socket_out->connectToHost(QHostAddress(combo_box_text), 5151, QIODevice::WriteOnly);
+        voice_in->start(voice_socket_out);
+        connected = true;
+    }
 }
 
 void Voice::slot_voice_onclick_disconnect()
