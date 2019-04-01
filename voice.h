@@ -25,7 +25,7 @@ public:
     QString voice_server_ip;
     QString combo_box_text;
 
-    bool connected;
+    bool connected = false;
 
     void send_header();
     void set_socket(QTcpSocket *client_socket);
